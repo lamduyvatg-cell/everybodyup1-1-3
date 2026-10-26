@@ -32,9 +32,20 @@ export type IllustrationId =
   | 'color-pink'
   | 'color-white'
   | 'color-black'
-  | 'color-gray'
-  | 'color-brown'
-  // Unit 3
+  // Unit 3 Numbers
+  | 'num-1'
+  | 'num-2'
+  | 'num-3'
+  | 'num-4'
+  | 'num-5'
+  | 'num-6'
+  | 'num-7'
+  | 'num-8'
+  | 'num-9'
+  | 'num-10'
+  | 'num-11'
+  | 'num-12'
+  // Unit 3 Birthday & Toys
   | 'cake-7'
   | 'cake-8'
   | 'doll'
@@ -378,6 +389,71 @@ export const ItemIllustration: React.FC<IllustrationProps> = ({ id, className = 
           <circle cx="34" cy="22" r="4" fill={info.fill} />
           <circle cx="80" cy="26" r="3" fill={info.fill} />
           <circle cx="82" cy="74" r="4" fill={info.fill} />
+        </svg>
+      );
+    }
+
+    // UNIT 3: NUMBERS 1 - 12
+    case 'num-1':
+    case 'num-2':
+    case 'num-3':
+    case 'num-4':
+    case 'num-5':
+    case 'num-6':
+    case 'num-7':
+    case 'num-8':
+    case 'num-9':
+    case 'num-10':
+    case 'num-11':
+    case 'num-12': {
+      const numValue = parseInt(id.replace('num-', ''), 10);
+      const colorSchemes: Record<number, { bg: string; border: string; text: string; dot: string }> = {
+        1: { bg: '#FEF3C7', border: '#F59E0B', text: '#B45309', dot: '#F59E0B' },
+        2: { bg: '#ECFDF5', border: '#10B981', text: '#047857', dot: '#10B981' },
+        3: { bg: '#EFF6FF', border: '#3B82F6', text: '#1D4ED8', dot: '#3B82F6' },
+        4: { bg: '#FAF5FF', border: '#A855F7', text: '#7E22CE', dot: '#A855F7' },
+        5: { bg: '#FDF2F8', border: '#EC4899', text: '#BE185D', dot: '#EC4899' },
+        6: { bg: '#FFF7ED', border: '#F97316', text: '#C2410C', dot: '#F97316' },
+        7: { bg: '#FEFCE8', border: '#EAB308', text: '#A16207', dot: '#EAB308' },
+        8: { bg: '#FEF2F2', border: '#EF4444', text: '#B91C1C', dot: '#EF4444' },
+        9: { bg: '#EEF2FF', border: '#6366F1', text: '#4338CA', dot: '#6366F1' },
+        10: { bg: '#F0FDFA', border: '#14B8A6', text: '#0F766E', dot: '#14B8A6' },
+        11: { bg: '#F0FDF4', border: '#22C55E', text: '#15803D', dot: '#22C55E' },
+        12: { bg: '#FFF1F2', border: '#F43F5E', text: '#BE123C', dot: '#F43F5E' },
+      };
+      const scheme = colorSchemes[numValue] || colorSchemes[1];
+      const dots = Array.from({ length: Math.min(numValue, 12) });
+
+      return (
+        <svg viewBox="0 0 100 100" className={className} style={style} fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Card Base */}
+          <rect x="8" y="8" width="84" height="84" rx="20" fill={scheme.bg} stroke={scheme.border} strokeWidth="3" />
+          {/* Inner Badge */}
+          <circle cx="50" cy="46" r="28" fill="#FFFFFF" stroke={scheme.border} strokeWidth="2" strokeDasharray="3 2" />
+          {/* Number text */}
+          <text
+            x="50"
+            y={numValue >= 10 ? '56' : '58'}
+            textAnchor="middle"
+            fontSize={numValue >= 10 ? '36' : '44'}
+            fontWeight="900"
+            fill={scheme.text}
+            fontFamily="sans-serif"
+          >
+            {numValue}
+          </text>
+          {/* Visual Counting Dots at bottom */}
+          <g transform="translate(14, 80)">
+            {dots.map((_, i) => (
+              <circle
+                key={i}
+                cx={(i * 72) / (numValue > 1 ? numValue - 1 : 1)}
+                cy="0"
+                r={numValue > 8 ? '2' : '2.5'}
+                fill={scheme.dot}
+              />
+            ))}
+          </g>
         </svg>
       );
     }

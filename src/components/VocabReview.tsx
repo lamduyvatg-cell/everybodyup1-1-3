@@ -106,61 +106,80 @@ export const VocabReview: React.FC<VocabReviewProps> = ({ selectedUnit }) => {
                   <PraiseSticker type="super-star" size="sm" showText={false} />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {unitItems.map(item => (
-                    <div
-                      key={item.id}
-                      className="bg-white rounded-3xl p-4 border-2 border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all group flex flex-col justify-between"
-                    >
-                      <div>
-                        {/* Illustration Container */}
-                        <div className="bg-slate-50 rounded-2xl p-3 flex items-center justify-center relative mb-3 group-hover:scale-105 transition-transform">
-                          <ItemIllustration id={item.illustration} className="w-24 h-24" />
-                          <button
-                            onClick={() => speakWord(item.word)}
-                            className="absolute bottom-2 right-2 p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-md transition-transform active:scale-90"
-                            title="Nghe phát âm từ này"
-                          >
-                            <Volume2 size={16} />
-                          </button>
-                        </div>
+                {/* Group by Lesson so Numbers 1-12 and other topics are clearly distinguished */}
+                {Array.from(new Set(unitItems.map(i => i.lesson))).map(lessonName => {
+                  const lessonItems = unitItems.filter(i => i.lesson === lessonName);
+                  const isNumberLesson = lessonName.includes('Numbers');
 
-                        {/* Word & Phonetic */}
-                        <div className="text-center">
-                          <h4 className="text-xl sm:text-2xl font-black text-blue-700 capitalize">
-                            {item.word}
-                          </h4>
-                          <p className="text-xs text-slate-400 font-mono mt-0.5">
-                            {item.phonetic}
-                          </p>
-                          <p className="text-sm font-bold text-slate-700 mt-1 bg-amber-50 py-1 px-2 rounded-lg border border-amber-100">
-                            {item.meaning}
-                          </p>
-                        </div>
+                  return (
+                    <div key={lessonName} className="space-y-3 pt-2">
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1 rounded-full text-xs font-black bg-blue-100 text-blue-800 uppercase tracking-wide">
+                          {isNumberLesson ? '🔢 Lesson 1: Numbers (Tách riêng số 1 đến 12)' : `📌 ${lessonName}`}
+                        </span>
+                        <span className="text-xs text-slate-500 font-bold">
+                          ({lessonItems.length} từ vựng)
+                        </span>
                       </div>
 
-                      {/* Example */}
-                      <div className="mt-3 pt-3 border-t border-slate-100">
-                        <button
-                          onClick={() => speakWord(item.example)}
-                          className="w-full text-left bg-slate-50 hover:bg-blue-50 p-2 rounded-xl transition-colors group/ex"
-                        >
-                          <div className="flex items-start gap-1.5">
-                            <Volume2 size={14} className="text-blue-500 mt-0.5 shrink-0" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {lessonItems.map(item => (
+                          <div
+                            key={item.id}
+                            className="bg-white rounded-3xl p-4 border-2 border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all group flex flex-col justify-between"
+                          >
                             <div>
-                              <p className="text-xs sm:text-sm font-semibold text-blue-900 group-hover/ex:text-blue-600">
-                                {item.example}
-                              </p>
-                              <p className="text-xs text-slate-500 italic mt-0.5">
-                                {item.exampleVi}
-                              </p>
+                              {/* Illustration Container */}
+                              <div className="bg-slate-50 rounded-2xl p-3 flex items-center justify-center relative mb-3 group-hover:scale-105 transition-transform">
+                                <ItemIllustration id={item.illustration} className="w-24 h-24" />
+                                <button
+                                  onClick={() => speakWord(item.word)}
+                                  className="absolute bottom-2 right-2 p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-md transition-transform active:scale-90"
+                                  title="Nghe phát âm từ này"
+                                >
+                                  <Volume2 size={16} />
+                                </button>
+                              </div>
+
+                              {/* Word & Phonetic */}
+                              <div className="text-center">
+                                <h4 className="text-xl sm:text-2xl font-black text-blue-700 capitalize">
+                                  {item.word}
+                                </h4>
+                                <p className="text-xs text-slate-400 font-mono mt-0.5">
+                                  {item.phonetic}
+                                </p>
+                                <p className="text-sm font-bold text-slate-700 mt-1 bg-amber-50 py-1 px-2 rounded-lg border border-amber-100">
+                                  {item.meaning}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Example */}
+                            <div className="mt-3 pt-3 border-t border-slate-100">
+                              <button
+                                onClick={() => speakWord(item.example)}
+                                className="w-full text-left bg-slate-50 hover:bg-blue-50 p-2 rounded-xl transition-colors group/ex"
+                              >
+                                <div className="flex items-start gap-1.5">
+                                  <Volume2 size={14} className="text-blue-500 mt-0.5 shrink-0" />
+                                  <div>
+                                    <p className="text-xs sm:text-sm font-semibold text-blue-900 group-hover/ex:text-blue-600">
+                                      {item.example}
+                                    </p>
+                                    <p className="text-xs text-slate-500 italic mt-0.5">
+                                      {item.exampleVi}
+                                    </p>
+                                  </div>
+                                </div>
+                              </button>
                             </div>
                           </div>
-                        </button>
+                        ))}
                       </div>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
             );
           })}

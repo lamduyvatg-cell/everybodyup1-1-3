@@ -153,7 +153,7 @@ export const WorksheetPrint: React.FC<WorksheetPrintProps> = ({ selectedUnit }) 
                   <span className="font-semibold text-slate-900">Unit 2:</span> paint, paper, chalk, yarn, glue, tape, red, yellow, blue, green, purple, orange, pink, black, white, gray, brown.
                 </li>
                 <li>
-                  <span className="font-semibold text-slate-900">Unit 3:</span> numbers 1 - 12 (one, two... twelve), doll/dolls, ball/balls, car/cars, kite/kites, game, marble, puzzle, card.
+                  <span className="font-semibold text-slate-900">Unit 3:</span> Số đếm 1–12 (one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve); Đồ chơi (doll/dolls, ball/balls, car/cars, kite/kites, game/games, marble/marbles, puzzle/puzzles, card/cards).
                 </li>
               </ul>
             </div>
